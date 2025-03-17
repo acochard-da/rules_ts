@@ -2,6 +2,7 @@
 
 load("@aspect_bazel_lib//lib:testing.bzl", "assert_contains")
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_js//js:defs.bzl", "js_test")
 
 # Type-checks, and emits output to
 # bazel-bin/examples/simple/foo.js
@@ -25,7 +26,14 @@ ts_project(
         # by the npm_link_all_packages call in /examples/BUILD.bazel
         "//examples:node_modules/@types/node",
         "//examples:node_modules/date-fns",
+        # debugging
+        "//examples:node_modules/@mojotech/json-type-validation",
     ],
+)
+
+js_test(
+    name = "test",
+    entry_point = "foo.js",
 )
 
 # Assert that the output looks like what we expected.
